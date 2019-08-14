@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Message Board</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <h1>Dojo Message Board</h1>
+    <hr>
+    <form action="/messages" method="POST">
+        <label for="name">Name:</label>
+        <input type="text" class="form-control" name="name"><br>
+        <label for="message">Message:</label>
+        <textarea name="message" class="form-control"cols="30" rows="10"></textarea><br>
+        <input type="submit" class="btn btn-light" value="Post Up">
+    </form>
+
+    <% for(var m of message) {%>
+        <div>
+            <h2><%= m.name %> says: </h2>
+            <p><%= m.message %> </p>
+
+            <% for (var c of m.comments) {%>
+                <h4><%= c.name %> </h4>
+                <p><%= c.comments %> </p><br>
+            <% } %>
+            <form action="/comments" method="POST"> 
+            <input type="hidden" name="messageId" value=" <%= m._id %> ">
+            <label for="name">Name: </label><br>
+            <input type="text"class="form-control" name="name"><br>
+            <label for="comment">Comment: </label>
+            <textarea name="comment" class="form-control" cols="50" rows="10"></textarea>
+            <input type="submit" class="btn btn-light" value="POST Comment">
+            </form>
+
+        </div>
+    <% } %>
+</body>
+</html>
